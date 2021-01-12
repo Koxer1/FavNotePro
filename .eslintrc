@@ -1,6 +1,41 @@
 {
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true,
+            "experimentalObjectRestSpread": true
+        }
+      },
     "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+      "airbnb",
+      "prettier",
+      "prettier/react"
+      
+    ],
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+      "quotes": [2, "single", { "avoidEscape": true }],
+      "jsx-quotes": [1, "prefer-single"],
+      "import/no-named-as-default": 0,
+      "react/react-in-jsx-scope": "off",
+       "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+       "import/prefer-default-export": "off",
+       "react/jsx-props-no-spreading": "off"
+       
+       
+      
+    },
+    "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+    },
+    "globals": {
+      "document": true
+    }
   }
