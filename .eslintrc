@@ -21,9 +21,9 @@
       "jsx-quotes": [1, "prefer-single"],
       "import/no-named-as-default": 0,
       "react/react-in-jsx-scope": "off",
-       "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-       "import/prefer-default-export": "off",
-       "react/jsx-props-no-spreading": "off"
+      "import/no-extraneous-dependencies": [0, {"devDependencies": true}],
+      "import/prefer-default-export": "off",
+      "react/jsx-props-no-spreading": "off"
        
        
       

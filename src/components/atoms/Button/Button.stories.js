@@ -1,5 +1,4 @@
 // YourComponent.stories.js
-
 import React from 'react';
 import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
 import Button from './Button';
@@ -15,9 +14,7 @@ export const withAButton = () => (
   <Button disabled={boolean('Disabled', false)}>{text('Label', 'Hello Storybook')}</Button>
 );
 
-export const Primary = () => <Button>Click</Button>;
-
-export const Secondary = () => {
+export const Primary = () => {
   const label = 'Colors';
   const options = {
     Primary: 'hsl(49, 100%, 58%)',
@@ -32,3 +29,5 @@ export const Secondary = () => {
 
   return <Button color={value}>Button</Button>;
 };
+
+export const Secondary = () => <Button secondary>Click</Button>;
