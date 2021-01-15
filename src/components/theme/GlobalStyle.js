@@ -12,7 +12,12 @@ box-sizing: border-box;
  -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+    font-size: 62.5%; 
+  }
+  
 body {
+    font-size: 1.6rem;
     font-family: 'Montserrat', sans-serif;
 }
 

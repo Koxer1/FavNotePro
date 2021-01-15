@@ -7,6 +7,7 @@ import Paragraph from '../../components/atoms/Paragraph/Paragraph';
 import ButtonIcon from '../../components/atoms/ButtonIcon/ButtonIcon';
 import GlobalStyle from '../../components/theme/GlobalStyle';
 import { theme } from '../../components/theme/mainTheme';
+import Card from '../../components/molecules/Card/Card';
 
 const Root = () => (
   <>
@@ -21,7 +22,15 @@ const Root = () => (
         <Heading>This is a normal Heading</Heading>
         <Heading big>This is a big Heading</Heading>
         <Paragraph>This is a paragraph</Paragraph>
-        <ButtonIcon />
+        <ButtonIcon bulb />
+        <ButtonIcon logout />
+        <ButtonIcon pen />
+        <ButtonIcon plus />
+        <ButtonIcon twitter />
+        <ButtonIcon search />
+        <Card />
+        <Card cardType='twitter' />
+        <Card cardType='article' />
       </>
     </ThemeProvider>
   </>

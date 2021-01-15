@@ -1,33 +1,60 @@
 import React from 'react';
-import { withKnobs, select } from '@storybook/addon-knobs';
+import styled from 'styled-components';
+
 import ButtonIcon from './ButtonIcon';
-import plusIcon from '../../../assets/icons/plus.svg';
-import bulbIcon from '../../../assets/icons/bulb.svg';
-import logOutIcon from '../../../assets/icons/logout.svg';
-import penIcon from '../../../assets/icons/pen.svg';
-import twitterIcon from '../../../assets/icons/twitter.svg';
-import magnifierIcon from '../../../assets/magnifier.svg';
+
+import Plus from '../../../assets/icons/plus.svg';
+import Bulb from '../../../assets/icons/bulb.svg';
+import LogOut from '../../../assets/icons/logout.svg';
+import Pen from '../../../assets/icons/pen.svg';
+import Twitter from '../../../assets/icons/twitter.svg';
+import Search from '../../../assets/magnifier.svg';
+
+const YellowBackground = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: ${({ theme }) => theme.note};
+`;
+
+const iconMap = { Bulb, LogOut, Pen, Plus, Twitter, Search };
 
 export default {
   title: 'ButtonIcon',
   component: ButtonIcon,
-  decorator: [withKnobs],
+  argTypes: {
+    icon: {
+      control: {
+        type: 'inline-radio',
+        options: Object.keys(iconMap),
+      },
+    },
+  },
 };
 
-export const Normal = () => {
-  const label = 'Type';
-  const options = {
-    Plus: plusIcon,
-    Bulb: bulbIcon,
-    LogOut: logOutIcon,
-    Pen: penIcon,
-    Twitter: twitterIcon,
-    Search: magnifierIcon,
-  };
-  const defaultValue = plusIcon;
-  const groupId = 'GROUP_ID2';
+// eslint-disable-next-line react/prop-types
+const Template = ({ icon, ...rest }) => {
+  const selectedIcon = iconMap[icon];
 
-  const value = select(label, options, defaultValue, groupId);
-
-  return <ButtonIcon icon={value} />;
+  return <ButtonIcon icon={selectedIcon} {...rest} />;
 };
+
+export const Primary = Template.bind({});
+export const Yellow = Template.bind({});
+
+Primary.args = {
+  active: false,
+};
+Yellow.args = {
+  active: false,
+};
+
+Yellow.decorators = [
+  (Story) => (
+    <YellowBackground>
+      <Story />
+    </YellowBackground>
+  ),
+];

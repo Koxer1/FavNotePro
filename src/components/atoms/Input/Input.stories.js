@@ -6,5 +6,10 @@ export default {
   component: Input,
 };
 
-export const Normal = () => <Input placeholder='login' />;
-export const Big = () => <Input placeholder='search' search />;
+const Template = (args) => <Input placeholder='Login' {...args} />;
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  search: false,
+};

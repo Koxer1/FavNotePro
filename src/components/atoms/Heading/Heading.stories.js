@@ -1,11 +1,16 @@
 import React from 'react';
-import { withKnobs } from '@storybook/addon-knobs';
 import Heading from './Heading';
 
 export default {
   title: 'Heading',
   component: Heading,
-  decorators: [withKnobs],
 };
-export const Normal = () => <Heading>Test</Heading>;
-export const Big = () => <Heading big>Big</Heading>;
+
+const Template = (args) => <Heading {...args}>{args.label}</Heading>;
+
+export const Normal = Template.bind({});
+
+Normal.args = {
+  label: 'Write something',
+  big: false,
+};

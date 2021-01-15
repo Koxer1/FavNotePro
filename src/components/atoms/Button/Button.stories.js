@@ -1,33 +1,59 @@
-// YourComponent.stories.js
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { withKnobs, boolean, text, select } from '@storybook/addon-knobs';
+
 import Button from './Button';
 
-// This default export determines where your story goes in the story list
+const Note = 'hsl(49, 100%, 58%)';
+const Twitter = 'hsl(196, 83%, 75%)';
+const Article = 'hsl(106, 47%, 64%)';
+
+const colors = { Note, Twitter, Article };
+
 export default {
   title: 'Button',
   component: Button,
-  decorators: [withKnobs],
+  argTypes: {
+    color: {
+      control: {
+        type: 'select',
+        options: Object.keys(colors),
+      },
+    },
+  },
 };
 
-export const withAButton = () => (
-  <Button disabled={boolean('Disabled', false)}>{text('Label', 'Hello Storybook')}</Button>
-);
+const Template = ({ color, ...args }) => {
+  const selectedColor = colors[color];
 
-export const Primary = () => {
-  const label = 'Colors';
-  const options = {
-    Primary: 'hsl(49, 100%, 58%)',
-    Secondary: 'hsl(196, 83%, 75%)',
-    Tertiary: 'hsl(106, 47%, 64%)',
-  };
-
-  const defaultValue = 'hsl(49, 100%, 58%)';
-  const groupId = 'GROUP-ID1';
-
-  const value = select(label, options, defaultValue, groupId);
-
-  return <Button color={value}>Button</Button>;
+  return (
+    <Button color={selectedColor} {...args}>
+      {args.label}
+    </Button>
+  );
 };
 
-export const Secondary = () => <Button secondary>Click</Button>;
+export const Normal = Template.bind({});
+
+Normal.args = {
+  secondary: false,
+  label: 'Button',
+  color: 'select',
+};
+
+// export const Primary = () => {
+//   const label = 'Colors';
+//   const options = {
+//     Primary: 'hsl(49, 100%, 58%)',
+//     Secondary: 'hsl(196, 83%, 75%)',
+//     Tertiary: 'hsl(106, 47%, 64%)',
+//   };
+
+//   const defaultValue = 'hsl(49, 100%, 58%)';
+//   const groupId = 'GROUP-ID1';
+
+//   const value = select(label, options, defaultValue, groupId);
+
+//   return <Button color={value}>Button</Button>;
+// };
+
+// export const Secondary = () => <Button secondary>Click</Button>;
