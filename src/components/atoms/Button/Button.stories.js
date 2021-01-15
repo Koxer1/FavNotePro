@@ -10,7 +10,7 @@ const Article = 'hsl(106, 47%, 64%)';
 const colors = { Note, Twitter, Article };
 
 export default {
-  title: 'Button',
+  title: 'Atoms/Button',
   component: Button,
   argTypes: {
     color: {

@@ -22,7 +22,7 @@ const YellowBackground = styled.div`
 const iconMap = { Bulb, LogOut, Pen, Plus, Twitter, Search };
 
 export default {
-  title: 'ButtonIcon',
+  title: 'Atoms/ButtonIcon',
   component: ButtonIcon,
   argTypes: {
     icon: {

@@ -7,6 +7,7 @@ import twitterIcon from '../../../assets/icons/twitter.svg';
 import searchIcon from '../../../assets/magnifier.svg';
 
 const ButtonIcon = styled.button`
+  display: block;
   width: 46px;
   height: 46px;
   background-color: transparent;
@@ -52,6 +53,10 @@ const ButtonIcon = styled.button`
     css`
       background-color: white;
     `};
+
+  &.active {
+    background-color: white;
+  }
 `;
 
 export default ButtonIcon;
