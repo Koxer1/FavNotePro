@@ -1,10 +1,48 @@
 import React from 'react';
-import UserPageTemplate from '../templates/UserPageTemplate';
+import GridTemplate from '../templates/GridTemplate';
+import Card from '../components/molecules/Card/Card';
+
+const twitters = [
+  {
+    id: 1,
+    title: 'Konrad Łomzik',
+    created: '1 day',
+    image: 'https://pbs.twimg.com/profile_images/1174375783718166529/WK0LDC2P_400x400.jpg',
+    twitterName: 'KKoxer',
+    content: 'Fajny gość',
+  },
+  {
+    id: 2,
+    title: 'Kacper Prokop',
+    created: '5 days',
+    image:
+      'https://scontent.fosl3-2.fna.fbcdn.net/v/t1.0-1/p480x480/73497851_2481962918555865_1538534191111602176_o.jpg?_nc_cat=106&ccb=2&_nc_sid=7206a8&_nc_ohc=5ify4acNBesAX9TnGDu&_nc_ht=scontent.fosl3-2.fna&tp=6&oh=330dc13a1f1703b8a1de9cb180e4c050&oe=6028C38C',
+    content: 'Głupi gość',
+  },
+  {
+    id: 3,
+    title: 'Weronika Zaremba',
+    created: '10 days',
+    image:
+      'https://scontent.fosl3-1.fna.fbcdn.net/v/t1.0-1/p480x480/89767935_1412643985604145_2233287443782565888_n.jpg?_nc_cat=105&ccb=2&_nc_sid=7206a8&_nc_ohc=pOejU80TXDkAX-Up5hS&_nc_ht=scontent.fosl3-1.fna&tp=6&oh=0a103093fcbe223571e79a5f20dc4664&oe=6026D03A',
+    content: 'Spoko dupa',
+  },
+  {
+    id: 4,
+    title: 'Natalia Zaremba',
+    created: '7 days',
+    image:
+      'https://scontent.fosl3-1.fna.fbcdn.net/v/t1.0-1/p480x480/117642809_3127253644017407_3048849854698122355_n.jpg?_nc_cat=102&ccb=2&_nc_sid=7206a8&_nc_ohc=4-Hv8iAiQp0AX-S6_dc&_nc_ht=scontent.fosl3-1.fna&tp=6&oh=a342dd0abab40de98f0429dd65d3b973&oe=602A60E9',
+    content: 'Narzeczona tego głupiego',
+  },
+];
 
 const Twitters = () => (
-  <UserPageTemplate>
-    <h1>Twitters view!</h1>
-  </UserPageTemplate>
+  <GridTemplate pageType='twitters'>
+    {twitters.map((article) => (
+      <Card cardType='twitters' key={twitters.id} {...article} />
+    ))}
+  </GridTemplate>
 );
 
 export default Twitters;

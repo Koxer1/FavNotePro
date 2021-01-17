@@ -1,13 +1,14 @@
-import React from 'react';
+/* eslint-disable react/state-in-constructor */
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Heading from '../../atoms/Heading/Heading';
 import Button from '../../atoms/Button/Button';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
 import LinkIcon from '../../../assets/icons/link.svg';
 
 const StyledWrapper = styled.div`
-  width: 500px;
   box-shadow: 0 10px 30px -10px hsla(0, 0%, 0%, 0.1);
   border-radius: 10px;
   overflow: hidden;
@@ -56,10 +57,10 @@ const StyledAvatar = styled.img`
   position: absolute;
   width: 86px;
   height: 86px;
-  border: 5px solid ${({ theme }) => theme.twitter};
+  border: 5px solid ${({ theme }) => theme.twitters};
   border-radius: 50px;
   right: 20px;
-  top: 20px;
+  top: 10px;
 `;
 
 const StyledLinkButton = styled.a`
@@ -77,29 +78,52 @@ const StyledLinkButton = styled.a`
 `;
 
 // eslint-disable-next-line react/prop-types
-const Card = ({ cardType }) => (
-  <StyledWrapper>
-    <InnerWrapper activeColor={cardType}>
-      <StyledHeading>Hello Konrad</StyledHeading>
-      <DateInfo>3 days</DateInfo>
-      {cardType === 'twitter' && <StyledAvatar src='https://source.unsplash.com/random' />}
-      {cardType === 'article' && <StyledLinkButton src='https://youtube.com/apple' />}
-    </InnerWrapper>
-    <InnerWrapper flex>
-      <Paragraph>
-        To jest przykładowy tekst w paragrafie, który znajduje się w karcie. Bardzo ładnie wygląda.
-      </Paragraph>
-      <Button secondary>Remove</Button>
-    </InnerWrapper>
-  </StyledWrapper>
-);
+// eslint-disable-next-line no-undef
+class Card extends Component {
+  state = {
+    redirect: false,
+  };
+
+  handleCardClick = () => this.setState({ redirect: true });
+
+  render() {
+    const { id, cardType, title, created, image, articleUrl, content } = this.props;
+
+    // eslint-disable-next-line react/destructuring-assignment
+    if (this.state.redirect) {
+      return <Redirect to={`${cardType}/${id}`} />;
+    }
+    return (
+      <StyledWrapper onClick={this.handleCardClick}>
+        <InnerWrapper activeColor={cardType}>
+          <StyledHeading>{title}</StyledHeading>
+          <DateInfo>{created}</DateInfo>
+          {cardType === 'twitters' && <StyledAvatar src={image} />}
+          {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+        </InnerWrapper>
+        <InnerWrapper flex>
+          <Paragraph>{content}</Paragraph>
+          <Button secondary>Remove</Button>
+        </InnerWrapper>
+      </StyledWrapper>
+    );
+  }
+}
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['note', 'twitter', 'article']),
+  id: PropTypes.number.isRequired,
+  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  articleUrl: PropTypes.string,
+  content: PropTypes.string.isRequired,
 };
 
 Card.defaultProps = {
-  cardType: 'note',
+  cardType: 'notes',
+  image: null,
+  articleUrl: null,
 };
 
 export default Card;

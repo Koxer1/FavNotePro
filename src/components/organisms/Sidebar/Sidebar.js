@@ -6,9 +6,11 @@ import Logo from '../../../assets/icons/logo.svg';
 
 const StyledWrapper = styled.div`
   position: fixed;
+  left: 0;
+  top: 0;
   width: 150px;
   height: 100vh;
-  background-color: ${({ theme }) => theme.note};
+  background-color: ${({ activeColor, theme }) => (activeColor ? theme[activeColor] : theme.notes)};
   margin: 0;
   padding: 10px;
   display: flex;
@@ -17,11 +19,16 @@ const StyledWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledLogo = styled.img`
+const StyledLogoLink = styled(NavLink)`
   display: block;
-  width: 100px;
-  height: auto;
-  margin-top: 20px;
+  width: 127px;
+  height: 127px;
+  background-image: url(${Logo});
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 80%;
+  border: none;
+  margin-bottom: 10vh;
 `;
 
 const StyledLinkList = styled.div`
@@ -35,11 +42,12 @@ const StyledButtonIcon = styled(ButtonIcon)`
   margin-bottom: 10px;
 `;
 
-const Sidebar = () => (
-  <StyledWrapper>
-    <StyledLogo src={Logo} to='/' />
+// eslint-disable-next-line react/prop-types
+const Sidebar = ({ pageType }) => (
+  <StyledWrapper activeColor={pageType}>
+    <StyledLogoLink to='/' />
     <StyledLinkList>
-      <StyledButtonIcon exact as={NavLink} activeclass='active' to='/' pen />
+      <StyledButtonIcon as={NavLink} activeclass='active' to='/notes' pen />
       <StyledButtonIcon as={NavLink} activeclass='active' to='/twitters' twitter />
       <StyledButtonIcon as={NavLink} activeclass='active' to='/articles' bulb />
     </StyledLinkList>

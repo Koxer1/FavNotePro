@@ -1,16 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Sidebar from '../components/organisms/Sidebar/Sidebar';
 
-const Wrapper = styled.div`
-  padding-left: 150px;
-`;
-// eslint-disable-next-line react/prop-types
-const UserPageTemplate = ({ children }) => (
+const UserPageTemplate = ({ children, pageType }) => (
   <>
-    <Sidebar />
-    <Wrapper>{children}</Wrapper>
+    <Sidebar pageType={pageType} />
+    {children}
   </>
 );
+
+UserPageTemplate.propTypes = {
+  children: PropTypes.element.isRequired,
+  pageType: PropTypes.element.isRequired,
+};
 
 export default UserPageTemplate;
