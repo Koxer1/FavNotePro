@@ -1,35 +1,12 @@
+/* eslint-disable import/extensions */
+
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/molecules/Card/Card';
 
-const articles = [
-  {
-    id: 1,
-    title: 'Pierwszy artykuł',
-    content:
-      'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.',
-    articleUrl: 'https://youtube.com/helloroman',
-    created: '10 days',
-  },
-  {
-    id: 2,
-    title: 'Drugi artykuł',
-    content:
-      'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. ',
-    articleUrl: 'https://youtube.com/helloroman',
-    created: '5 days',
-  },
-  {
-    id: 3,
-    title: 'Trzeci artykuł',
-    content:
-      'Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. ',
-    articleUrl: 'https://youtube.com/helloroman',
-    created: '2 days',
-  },
-];
-
-const Articles = () => (
+const Articles = ({ articles }) => (
   <GridTemplate pageType='articles'>
     {articles.map((article) => (
       <Card cardType='articles' key={article.id} {...article} />
@@ -37,4 +14,22 @@ const Articles = () => (
   </GridTemplate>
 );
 
-export default Articles;
+Articles.propTypes = {
+  articles: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      articleUrl: PropTypes.string,
+      created: PropTypes.string.isRequired,
+    }),
+  ),
+};
+
+Articles.defaultProps = {
+  articles: [],
+};
+
+const mapStateToProps = ({ articles }) => ({ articles });
+
+export default connect(mapStateToProps)(Articles);

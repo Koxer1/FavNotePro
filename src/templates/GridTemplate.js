@@ -11,9 +11,10 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledGrid = styled.div`
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 80px;
+  flex-wrap: wrap;
 `;
 
 const StyledHeading = styled(Heading)`

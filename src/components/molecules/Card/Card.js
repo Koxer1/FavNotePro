@@ -1,14 +1,19 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import removeItemAction from '../../../actions/index';
 import Heading from '../../atoms/Heading/Heading';
 import Button from '../../atoms/Button/Button';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
 import LinkIcon from '../../../assets/icons/link.svg';
 
 const StyledWrapper = styled.div`
+  width: 380px;
   box-shadow: 0 10px 30px -10px hsla(0, 0%, 0%, 0.1);
   border-radius: 10px;
   overflow: hidden;
@@ -87,23 +92,34 @@ class Card extends Component {
   handleCardClick = () => this.setState({ redirect: true });
 
   render() {
-    const { id, cardType, title, created, image, articleUrl, content } = this.props;
+    const {
+      id,
+      cardType,
+      title,
+      created,
+      image,
+      articleUrl,
+      content,
+      removeItemAction,
+    } = this.props;
 
     // eslint-disable-next-line react/destructuring-assignment
     if (this.state.redirect) {
       return <Redirect to={`${cardType}/${id}`} />;
     }
     return (
-      <StyledWrapper onClick={this.handleCardClick}>
-        <InnerWrapper activeColor={cardType}>
+      <StyledWrapper>
+        <InnerWrapper activeColor={cardType} onClick={this.handleCardClick}>
           <StyledHeading>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>
           {cardType === 'twitters' && <StyledAvatar src={image} />}
-          {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+          {cardType === 'articles' && <StyledLinkButton target='_blank' href={articleUrl} />}
         </InnerWrapper>
         <InnerWrapper flex>
           <Paragraph>{content}</Paragraph>
-          <Button secondary>Remove</Button>
+          <Button onClick={() => removeItemAction(cardType, id)} secondary>
+            Remove
+          </Button>
         </InnerWrapper>
       </StyledWrapper>
     );
@@ -125,5 +141,8 @@ Card.defaultProps = {
   image: null,
   articleUrl: null,
 };
+const mapDispatchToProps = (dispatch) => ({
+  removeItemAction: (itemType, id) => dispatch(removeItemAction(itemType, id)),
+});
 
-export default Card;
+export default connect(null, mapDispatchToProps)(Card);
