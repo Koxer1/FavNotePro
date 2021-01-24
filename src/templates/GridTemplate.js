@@ -5,6 +5,7 @@ import Input from '../components/atoms/Input/Input';
 import Heading from '../components/atoms/Heading/Heading';
 import Paragraph from '../components/atoms/Paragraph/Paragraph';
 import UserPageTemplate from './UserPageTemplate';
+import withContext from '../hoc/withContext';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -52,4 +53,4 @@ GridTemplate.propTypes = {
   pageType: PropTypes.element.isRequired,
 };
 
-export default GridTemplate;
+export default withContext(GridTemplate);
