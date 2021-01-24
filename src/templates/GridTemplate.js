@@ -12,8 +12,7 @@ const StyledWrapper = styled.div`
 
 const StyledGrid = styled.div`
   display: flex;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 80px;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 `;
 

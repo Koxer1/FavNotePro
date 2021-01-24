@@ -20,6 +20,8 @@ const StyledWrapper = styled.div`
   position: relative;
   display: grid;
   grid-template: 0.1fr 1fr;
+  margin-bottom: 50px;
+  margin-right: 30px;
 `;
 
 const InnerWrapper = styled.div`
