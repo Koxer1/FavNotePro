@@ -6,6 +6,7 @@ import Heading from '../components/atoms/Heading/Heading';
 import Paragraph from '../components/atoms/Paragraph/Paragraph';
 import Button from '../components/atoms/Button/Button';
 import UserPageTemplate from './UserPageTemplate';
+import withContext from '../hoc/withContext';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -56,8 +57,8 @@ const StyledContentParagraph = styled(Paragraph)`
   padding-bottom: 30px;
 `;
 
-const DetailsTemplate = ({ pageType, title, created, content, articleUrl, image }) => (
-  <UserPageTemplate pageType={pageType}>
+const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, image }) => (
+  <UserPageTemplate pageContext={pageContext}>
     <StyledWrapper>
       <StyledPageHeader>
         <StyledHeading big as='h1'>
@@ -66,21 +67,21 @@ const DetailsTemplate = ({ pageType, title, created, content, articleUrl, image 
         <StyledParagraph>{created}</StyledParagraph>
       </StyledPageHeader>
       <StyledContentParagraph>{content}</StyledContentParagraph>
-      {pageType === 'articles' && (
+      {pageContext === 'articles' && (
         <StyledLink target='_blank' href={articleUrl}>
           Open article
         </StyledLink>
       )}
-      {pageType === 'twitters' && <StyledImage alt={title} src={image} />}
-      <Link to={`/${pageType}`}>
-        <Button activeColor={pageType}>save / close</Button>
+      {pageContext === 'twitters' && <StyledImage alt={title} src={image} />}
+      <Link to={`/${pageContext}`}>
+        <Button activeColor={pageContext}>save / close</Button>
       </Link>
     </StyledWrapper>
   </UserPageTemplate>
 );
 
 DetailsTemplate.propTypes = {
-  pageType: PropTypes.string.isRequired,
+  pageContext: PropTypes.string.isRequired,
   title: PropTypes.string,
   created: PropTypes.string,
   content: PropTypes.string,
@@ -96,4 +97,4 @@ DetailsTemplate.defaultProps = {
   image: '',
 };
 
-export default DetailsTemplate;
+export default withContext(DetailsTemplate);

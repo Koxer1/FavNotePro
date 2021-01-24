@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ButtonIcon from '../../atoms/ButtonIcon/ButtonIcon';
 import Logo from '../../../assets/icons/logo.svg';
+import withContext from '../../../hoc/withContext';
 
 const StyledWrapper = styled.div`
   position: fixed;
@@ -42,9 +44,8 @@ const StyledButtonIcon = styled(ButtonIcon)`
   margin-bottom: 10px;
 `;
 
-// eslint-disable-next-line react/prop-types
-const Sidebar = ({ pageType }) => (
-  <StyledWrapper activeColor={pageType}>
+const Sidebar = ({ pageContext }) => (
+  <StyledWrapper activeColor={pageContext}>
     <StyledLogoLink to='/' />
     <StyledLinkList>
       <StyledButtonIcon as={NavLink} activeclass='active' to='/notes' pen />
@@ -55,4 +56,12 @@ const Sidebar = ({ pageType }) => (
   </StyledWrapper>
 );
 
-export default Sidebar;
+Sidebar.propTypes = {
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+};
+
+Sidebar.defaultProps = {
+  pageContext: 'notes',
+};
+
+export default withContext(Sidebar);

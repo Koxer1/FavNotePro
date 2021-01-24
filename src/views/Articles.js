@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/molecules/Card/Card';
+import withContext from '../hoc/withContext';
 
 const Articles = ({ articles }) => (
-  <GridTemplate pageType='articles'>
+  <GridTemplate pageContext='articles'>
     {articles.map((article) => (
-      <Card cardType='articles' key={article.id} {...article} />
+      <Card pageContext='articles' key={article.id} {...article} />
     ))}
   </GridTemplate>
 );
@@ -32,4 +33,4 @@ Articles.defaultProps = {
 
 const mapStateToProps = ({ articles }) => ({ articles });
 
-export default connect(mapStateToProps)(Articles);
+export default withContext(connect(mapStateToProps)(Articles));

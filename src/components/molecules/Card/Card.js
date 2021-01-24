@@ -11,6 +11,7 @@ import Heading from '../../atoms/Heading/Heading';
 import Button from '../../atoms/Button/Button';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
 import LinkIcon from '../../../assets/icons/link.svg';
+import withContext from '../../../hoc/withContext';
 
 const StyledWrapper = styled.div`
   width: 380px;
@@ -96,7 +97,7 @@ class Card extends Component {
   render() {
     const {
       id,
-      cardType,
+      pageContext,
       title,
       created,
       image,
@@ -107,19 +108,19 @@ class Card extends Component {
 
     // eslint-disable-next-line react/destructuring-assignment
     if (this.state.redirect) {
-      return <Redirect to={`${cardType}/${id}`} />;
+      return <Redirect to={`${pageContext}/${id}`} />;
     }
     return (
       <StyledWrapper>
-        <InnerWrapper activeColor={cardType} onClick={this.handleCardClick}>
+        <InnerWrapper activeColor={pageContext} onClick={this.handleCardClick}>
           <StyledHeading>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>
-          {cardType === 'twitters' && <StyledAvatar src={image} />}
-          {cardType === 'articles' && <StyledLinkButton target='_blank' href={articleUrl} />}
+          {pageContext === 'twitters' && <StyledAvatar src={image} />}
+          {pageContext === 'articles' && <StyledLinkButton target='_blank' href={articleUrl} />}
         </InnerWrapper>
         <InnerWrapper flex>
           <Paragraph>{content}</Paragraph>
-          <Button onClick={() => removeItemAction(cardType, id)} secondary>
+          <Button onClick={() => removeItemAction(pageContext, id)} secondary>
             Remove
           </Button>
         </InnerWrapper>
@@ -130,7 +131,7 @@ class Card extends Component {
 
 Card.propTypes = {
   id: PropTypes.number.isRequired,
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   image: PropTypes.string,
@@ -139,7 +140,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  cardType: 'notes',
+  pageContext: 'notes',
   image: null,
   articleUrl: null,
 };
@@ -147,4 +148,4 @@ const mapDispatchToProps = (dispatch) => ({
   removeItemAction: (itemType, id) => dispatch(removeItemAction(itemType, id)),
 });
 
-export default connect(null, mapDispatchToProps)(Card);
+export default connect(null, mapDispatchToProps)(withContext(Card));

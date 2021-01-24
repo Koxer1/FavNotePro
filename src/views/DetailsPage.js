@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 // eslint-disable-next-line import/no-unresolved
 import { routes } from '../routes/index';
 import DetailsTemplate from '../templates/DetailsTemplate';
+import withContext from '../hoc/withContext';
 
 class DetailsPage extends Component {
   // eslint-disable-next-line react/state-in-constructor
   state = {
-    pageType: 'notes',
+    pageContext: 'notes',
   };
 
   componentDidMount() {
@@ -15,13 +16,13 @@ class DetailsPage extends Component {
 
     switch (match.path) {
       case routes.twitter:
-        this.setState({ pageType: 'twitters' });
+        this.setState({ pageContext: 'twitters' });
         break;
       case routes.note:
-        this.setState({ pageType: 'notes' });
+        this.setState({ pageContext: 'notes' });
         break;
       case routes.article:
-        this.setState({ pageType: 'articles' });
+        this.setState({ pageContext: 'articles' });
         break;
       default:
         // eslint-disable-next-line no-console
@@ -40,11 +41,11 @@ class DetailsPage extends Component {
       created: '1 day',
     };
 
-    const { pageType } = this.state;
+    const { pageContext } = this.state;
 
     return (
       <DetailsTemplate
-        pageType={pageType}
+        pageContext={pageContext}
         title={dummyArticle.title}
         created={dummyArticle.created}
         content={dummyArticle.content}
@@ -59,4 +60,4 @@ DetailsPage.propTypes = {
   match: PropTypes.string.isRequired,
 };
 
-export default DetailsPage;
+export default withContext(DetailsPage);

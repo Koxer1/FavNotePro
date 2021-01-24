@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/molecules/Card/Card';
+import withContext from '../hoc/withContext';
 
 const Twitters = ({ twitters }) => (
-  <GridTemplate pageType='twitters'>
+  <GridTemplate pageContext='twitters'>
     {twitters.map((article) => (
       <Card cardType='twitters' key={twitters.id} {...article} />
     ))}
@@ -30,4 +31,4 @@ Twitters.defaultProps = {
 
 const mapStateToProps = ({ twitters }) => ({ twitters });
 
-export default connect(mapStateToProps)(Twitters);
+export default withContext(connect(mapStateToProps)(Twitters));

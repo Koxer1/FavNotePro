@@ -6,6 +6,8 @@ import Heading from '../components/atoms/Heading/Heading';
 import Paragraph from '../components/atoms/Paragraph/Paragraph';
 import UserPageTemplate from './UserPageTemplate';
 import withContext from '../hoc/withContext';
+import ButtonIcon from '../components/atoms/ButtonIcon/ButtonIcon';
+import NewItemBar from '../components/organisms/Sidebar/NewItemBar/NewItemBar';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -32,17 +34,28 @@ const StyledPageHeader = styled.div`
   margin: 25px 0 50px 0;
 `;
 
-const GridTemplate = ({ children, pageType }) => (
-  <UserPageTemplate pageType={pageType}>
+const StyledButtonIcon = styled(ButtonIcon)`
+  background-color: ${({ activeColor, theme }) => theme[activeColor]};
+  border-radius: 50px;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  z-index: 9999999;
+`;
+
+const GridTemplate = ({ children, pageContext }) => (
+  <UserPageTemplate>
     <StyledWrapper>
       <StyledPageHeader>
         <Input search placeholder='search' />
         <StyledHeading big as='h1'>
-          {pageType}
+          {pageContext}
         </StyledHeading>
-        <StyledParagraph>12 {pageType}</StyledParagraph>
+        <StyledParagraph>12 {pageContext}</StyledParagraph>
       </StyledPageHeader>
       <StyledGrid>{children}</StyledGrid>
+      <StyledButtonIcon activeColor={pageContext} />
+      <NewItemBar />
     </StyledWrapper>
   </UserPageTemplate>
 );
@@ -50,7 +63,11 @@ const GridTemplate = ({ children, pageType }) => (
 GridTemplate.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   children: PropTypes.array.isRequired,
-  pageType: PropTypes.element.isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+};
+
+GridTemplate.defaultProps = {
+  pageContext: 'notes',
 };
 
 export default withContext(GridTemplate);
