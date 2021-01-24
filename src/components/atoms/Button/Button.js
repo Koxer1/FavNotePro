@@ -11,6 +11,7 @@ const Button = styled.button`
   font-weight: 500;
   font-size: 16px;
   text-transform: uppercase;
+  cursor: pointer;
 
   ${({ secondary }) =>
     secondary &&

@@ -16,7 +16,7 @@ const ButtonIcon = styled.button`
   background-repeat: no-repeat;
   background-size: 40%;
   border-radius: 20px;
-  border: none;
+  cursor: pointer;
 
   ${({ bulb }) =>
     bulb &&

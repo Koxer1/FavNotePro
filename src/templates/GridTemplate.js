@@ -1,4 +1,8 @@
-import React from 'react';
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/state-in-constructor */
+
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Input from '../components/atoms/Input/Input';
@@ -35,30 +39,56 @@ const StyledPageHeader = styled.div`
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
-  background-color: ${({ activeColor, theme }) => theme[activeColor]};
+  cursor: pointer;
+  background-color: ${({ activeColor, theme, isVisible }) =>
+    isVisible ? 'hsl(0, 0%, 90%)' : theme[activeColor]};
   border-radius: 50px;
   position: fixed;
   right: 30px;
   bottom: 30px;
   z-index: 9999999;
+  width: 56px;
+  height: 56px;
+  border: none;
+  transform: rotate(${({ isVisible }) => (isVisible ? '-45deg' : '0')});
+  transition: transform 0.3s;
 `;
 
-const GridTemplate = ({ children, pageContext }) => (
-  <UserPageTemplate>
-    <StyledWrapper>
-      <StyledPageHeader>
-        <Input search placeholder='search' />
-        <StyledHeading big as='h1'>
-          {pageContext}
-        </StyledHeading>
-        <StyledParagraph>12 {pageContext}</StyledParagraph>
-      </StyledPageHeader>
-      <StyledGrid>{children}</StyledGrid>
-      <StyledButtonIcon activeColor={pageContext} />
-      <NewItemBar />
-    </StyledWrapper>
-  </UserPageTemplate>
-);
+class GridTemplate extends Component {
+  state = {
+    isNewItemBarVisible: false,
+  };
+
+  toggleNewItemBar = () => {
+    this.setState((prevState) => ({ isNewItemBarVisible: !prevState.isNewItemBarVisible }));
+  };
+
+  render() {
+    const { children, pageContext } = this.props;
+    const { isNewItemBarVisible } = this.state;
+
+    return (
+      <UserPageTemplate>
+        <StyledWrapper>
+          <StyledPageHeader>
+            <Input search placeholder='search' />
+            <StyledHeading big as='h1'>
+              {pageContext}
+            </StyledHeading>
+            <StyledParagraph>12 {pageContext}</StyledParagraph>
+          </StyledPageHeader>
+          <StyledGrid>{children}</StyledGrid>
+          <StyledButtonIcon
+            onClick={this.toggleNewItemBar}
+            activeColor={pageContext}
+            isVisible={isNewItemBarVisible}
+          />
+          <NewItemBar handleClose={this.toggleNewItemBar} isVisible={isNewItemBarVisible} />
+        </StyledWrapper>
+      </UserPageTemplate>
+    );
+  }
+}
 
 GridTemplate.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
