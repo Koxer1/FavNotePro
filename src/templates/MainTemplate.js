@@ -1,18 +1,56 @@
-import React from 'react';
+/* eslint-disable react/no-unused-state */
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from '../components/theme/GlobalStyle';
 import { theme } from '../components/theme/mainTheme';
 
-const MainTemplate = ({ children }) => (
-  <>
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>{children}</ThemeProvider>
-  </>
-);
+class MainTemplate extends Component {
+  // eslint-disable-next-line react/state-in-constructor
+  state = {
+    pageType: 'notes',
+  };
+
+  componentDidMount() {
+    this.setCurrentPage();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.setCurrentPage(prevState);
+  }
+
+  setCurrentPage = (prevState = '') => {
+    const pageTypes = ['notes', 'twitters', 'articles'];
+
+    const {
+      location: { pathname },
+    } = this.props;
+
+    const [currentPage] = pageTypes.filter((page) => pathname.includes(page));
+
+    if (prevState.pageType !== currentPage) {
+      this.setState({ pageType: currentPage });
+    }
+  };
+
+  render() {
+    const { children } = this.props;
+
+    return (
+      <>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </>
+    );
+  }
+}
 
 MainTemplate.propTypes = {
   children: PropTypes.element.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-export default MainTemplate;
+export default withRouter(MainTemplate);
