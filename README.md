@@ -1,3 +1,6 @@
+# You can quickly see the page here
+https://favnotepro.web.app/notes
+
 # You can check this app typing in the project directory:
 
 ### `npm start`
